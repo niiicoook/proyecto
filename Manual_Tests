@@ -1,0 +1,119 @@
+"""
+Manual testing // Movie data base system
+
+Date: 2025-07-27
+Test Case: Add movie
+
+---------------------------------------------------
+1. Add a movie
+Endpoint: 'POST /'
+Description: Adds a new movie to the database.
+
+---------------------------------------------------
+### Input: 
+**Body: {JSON}:**
+'''json
+{
+   title : "Titanic",
+   director : "James Cameron",
+   year : 1997 
+}
+----------------------------------------------------
+Expected response:
+
+Status Code: 200
+{"mensaje": "Pelicula agregada, la ID es: id"}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+{"mensaje": "Pelicula agregada, la ID es: 22"}
+
+-----------------------------------------------------
+
+Result: Passed
+
+-----------------------------------------------------
+
+2. Add repeat movie
+Endpoint: 'POST /'
+Description: Try adding a repeating movie to the database.
+
+---------------------------------------------------
+### Input: 
+**Body: {JSON}:**
+'''json
+{
+   title : "Titanic",
+   director : "James Cameron",
+   year : 1997 
+}
+----------------------------------------------------
+Expected response:
+
+Status Code: 409
+{"detail": "UNIQUE constraint failed: movies.title, movies.director, movies.year"}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 409
+{"detail": "UNIQUE constraint failed: movies.title, movies.director, movies.year"}
+
+-----------------------------------------------------
+
+Result: Passed
+
+-----------------------------------------------------
+2. Enter invalid data
+Endpoint: 'POST /'
+Description: Trying to add invalid data to the database.
+---------------------------------------------------
+### Input: 
+**Body: {JSON}:**
+'''json
+{
+   title : " ",
+   director : " ",
+   year :  
+}
+----------------------------------------------------
+Expected response:
+
+Status Code: 422
+{
+"Message" : "int() argument must be a string,
+            a bytes-like object or a real number,
+            not 'NoneType'"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 422
+{
+  "detail": [
+    {
+      "type": "json_invalid",
+      "loc": [
+        "body",
+        48
+      ],
+      "msg": "JSON decode error",
+      "input": {},
+      "ctx": {
+        "error": "Expecting value"
+      }
+    }
+  ]
+}
+-----------------------------------------------------
+
+Result: Failed
+
+Coments: 
+- The error message is not descriptive to the user
+- The function in charge should catch the error
+-----------------------------------------------------
+"""
