@@ -1,15 +1,14 @@
-"""
 Manual testing // Movie data base system
 
 Date: 2025-07-27
 Test Case: Add movie
 
----------------------------------------------------
+----------------------------------------------------
 1. Add a movie
-Endpoint: 'POST /'
+Endpoint: 'POST /add'
 Description: Adds a new movie to the database.
 
----------------------------------------------------
+----------------------------------------------------
 ### Input: 
 **Body: {JSON}:**
 '''json
@@ -30,17 +29,17 @@ Response obtained:
 Status Code: 200
 {"mensaje": "Pelicula agregada, la ID es: 22"}
 
------------------------------------------------------
+----------------------------------------------------
 
 Result: Passed
 
------------------------------------------------------
+----------------------------------------------------
 
 2. Add repeat movie
-Endpoint: 'POST /'
+Endpoint: 'POST /add'
 Description: Try adding a repeating movie to the database.
 
----------------------------------------------------
+----------------------------------------------------
 ### Input: 
 **Body: {JSON}:**
 '''json
@@ -61,15 +60,15 @@ Response obtained:
 Status Code: 409
 {"detail": "UNIQUE constraint failed: movies.title, movies.director, movies.year"}
 
------------------------------------------------------
+----------------------------------------------------
 
 Result: Passed
 
------------------------------------------------------
+----------------------------------------------------
 2. Enter invalid data
-Endpoint: 'POST /'
+Endpoint: 'POST /add'
 Description: Trying to add invalid data to the database.
----------------------------------------------------
+----------------------------------------------------
 ### Input: 
 **Body: {JSON}:**
 '''json
@@ -108,12 +107,93 @@ Status Code: 422
     }
   ]
 }
------------------------------------------------------
+----------------------------------------------------
 
 Result: Failed
 
 Coments: 
 - The error message is not descriptive to the user
 - The function in charge should catch the error
------------------------------------------------------
-"""
+----------------------------------------------------
+
+Date: 2025-07-28
+Test Case: Read the movie from the database
+
+----------------------------------------------------
+1. Select a movie
+Endpoint: 'GET /select'
+Description: Select the entire movie row
+
+----------------------------------------------------
+### Input: 
+Query parameters:
+
+Column: "title"
+Value: "Titanic"
+
+----------------------------------------------------
+Expected response:
+
+Status Code: 200
+[
+  [
+    22,
+    "Titanic",
+    "James Cameron",
+    1997
+  ]
+]
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+[
+  [
+    22,
+    "Titanic",
+    "James Cameron",
+    1997
+  ]
+]
+
+----------------------------------------------------
+
+Result: Passed
+
+----------------------------------------------------
+2. Select a non-existent movie
+
+Endpoint: 'GET /select'
+Description: Choose a movie that is not registered in the database
+
+----------------------------------------------------
+### Input: 
+Query parameters:
+
+Column: "title"
+Value: "The Room"
+
+----------------------------------------------------
+Expected response:
+
+Status Code: 404
+{
+"Message" : "No records found"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+[]
+
+----------------------------------------------------
+
+Result: Failed
+
+Coments: 
+- If there are no matches, the program should communicate that.
+- The status code should be 404, not 200.
+- Add exceptions in database requests.
+----------------------------------------------------

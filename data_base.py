@@ -95,4 +95,3 @@ def borrar():
     conn.close()
 
 
-tabla("movies")
