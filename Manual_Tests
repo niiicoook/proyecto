@@ -197,3 +197,165 @@ Coments:
 - The status code should be 404, not 200.
 - Add exceptions in database requests.
 ----------------------------------------------------
+
+Date: 2025-07-29
+Test Case: Update a movie from the database
+
+----------------------------------------------------
+1. Update a movie
+Endpoint: 'PATCH /update'
+Description: Update a movie from the database
+
+----------------------------------------------------
+### Input: 
+Query parameters:
+
+Column: "title"
+Value: "Interstelar"
+Value: 2
+
+----------------------------------------------------
+Expected response:
+
+Status Code: 200
+{
+  "Server message": "Fila actualizada"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+{
+  "Server message": "Fila actualizada"
+}
+
+
+----------------------------------------------------
+
+Result: Passed
+
+----------------------------------------------------
+2. Update a non-existent movie
+
+Endpoint: 'PATCH /update'
+Description: Attempt to update a movie that is not registered in the database
+
+----------------------------------------------------
+### Input: 
+Query parameters:
+
+Column: "title"
+Value: "El señor de los anillos"
+Value: 
+
+----------------------------------------------------
+Expected response:
+
+Status Code: 404
+{
+  "detail": "No records found"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 
+
+Please correct the following validation errors and try again.
+For 'ide': Required field is not provided.
+
+----------------------------------------------------
+
+Result: Failed
+
+Coments: 
+
+- The function expects the id parameter, but if the movie isn’t registered, you don’t have it.
+- The error is not handled with a try/except block
+----------------------------------------------------
+
+Test Case: Delete a movie from the database
+
+----------------------------------------------------
+1. Delete a movie
+Endpoint: 'DELETE /delete'
+Description: Delete a movie from the database
+
+----------------------------------------------------
+### Input: 
+**Body: {JSON}:**
+'''json
+{
+   title : "Titanic",
+   director : "James Cameron",
+   year : 1997 
+}
+
+----------------------------------------------------
+Expected response:
+
+Status Code: 200
+{
+"Server message":"Pelicula eliminada"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+{
+"Server message":"Pelicula eliminada"
+}
+
+----------------------------------------------------
+
+Result: Passed
+
+----------------------------------------------------
+
+1. Delete a movie
+Endpoint: 'DELETE /delete'
+Description: Attempt to delete a movie that does not exist in the database
+
+
+----------------------------------------------------
+### Input: 
+**Body: {JSON}:**
+'''json
+{
+   title : "Titanic",
+   director : "James Cameron",
+   year : 1997 
+}
+
+----------------------------------------------------
+
+Expected response:
+
+Status Code: 404
+{
+  "detail": "No records found"
+}
+
+----------------------------------------------------
+Response obtained:
+
+Status Code: 200
+{
+"Server message":"Pelicula eliminada"
+}
+
+----------------------------------------------------
+
+Result: Failed
+
+Coments: 
+- If there are no matches, the program should communicate that.
+- The status code should be 404, not 200.
+- Add exceptions in database requests.
+----------------------------------------------------
+
+Final comments:
+Most issues relate to error handling and communicating those errors to the user. 
+Required exceptions should be added to the database operations.

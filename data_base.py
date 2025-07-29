@@ -5,7 +5,7 @@ def creardb():
     conn.commit()
     conn.close()
 
-def tabla(nombre):
+def tabla(nombre: str):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
@@ -24,7 +24,7 @@ def tabla(nombre):
     conn.close()
 
 
-def agregar_fila(title, director, year):
+def agregar_fila(title: str, director: str, year:int):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
@@ -39,7 +39,7 @@ def agregar_fila(title, director, year):
     conn.close()
     return ide
 
-def agregar_varios(movies:list):
+def agregar_varios(movies:list[str, str, int]):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
@@ -52,7 +52,7 @@ def agregar_varios(movies:list):
     conn.commit()
     conn.close()
 
-def actualizar(columna, dato, idd):
+def actualizar(columna: str, dato: int|str, idd: int):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
@@ -61,18 +61,18 @@ def actualizar(columna, dato, idd):
     conn.commit()
     conn.close()
 
-def seleccionar(columna, valor):
+def seleccionar(columna: str, valor: int|str):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
     accion = f"SELECT * FROM movies WHERE {columna} = ?"
     cursor.execute(accion, (valor,))
-    resultado = cursor.fetchall()
+    resultado: int|str = cursor.fetchall()
 
     conn.close()
     return resultado
 
-def eliminar_fila(title, director, year):
+def eliminar_fila(title: str, director: str, year:int):
     conn = sqlite3.connect("peliculas.db")
     cursor = conn.cursor()
 
