@@ -1,9 +1,15 @@
-from data_base import tabla, agregar_fila, agregar_varios, actualizar, seleccionar, eliminar_fila
+from data_base import tabla, agregar_fila, actualizar, seleccionar, eliminar_fila
 from modelos import Peli, Ides, Tabla
 from fastapi import APIRouter, Query
 from fastapi import HTTPException
 
 router = APIRouter()
+
+@router.post("/post")
+def create_tabla(nombre:str):
+    tabla(nombre)
+    return {"Server message":f"Tabla {nombre} creada"}
+
 
 @router.post("/add", response_model=Ides)
 def movie_add(pelicula:Peli):
